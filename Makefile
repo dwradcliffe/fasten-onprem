@@ -15,6 +15,10 @@ build-storybook: dep-frontend
 serve-storybook: dep-frontend
 	cd frontend && npx ng run fastenhealth:storybook
 
+.PHONY: dev-frontend
+dev-frontend: dep-frontend
+	cd frontend && ng serve --hmr --live-reload -c dev
+
 .PHONY: serve-frontend
 serve-frontend: dep-frontend
 	cd frontend && yarn dist -- -c sandbox
