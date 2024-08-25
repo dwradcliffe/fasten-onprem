@@ -4,51 +4,53 @@ import { BrowserModule } from "@angular/platform-browser";
 import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { MedicalSourcesComponent } from './pages/medical-sources/medical-sources.component';
-import {ResourceDetailComponent} from './pages/resource-detail/resource-detail.component';
-import {AuthSigninComponent} from './pages/auth-signin/auth-signin.component';
-import {AuthSignupComponent} from './pages/auth-signup/auth-signup.component';
-import {IsAuthenticatedAuthGuard} from './auth-guards/is-authenticated-auth-guard';
-import {SourceDetailComponent} from './pages/source-detail/source-detail.component';
-import {PatientProfileComponent} from './pages/patient-profile/patient-profile.component';
-import {MedicalHistoryComponent} from './pages/medical-history/medical-history.component';
-import {ReportLabsComponent} from './pages/report-labs/report-labs.component';
-import {ResourceCreatorComponent} from './pages/resource-creator/resource-creator.component';
-import {ExploreComponent} from './pages/explore/explore.component';
-import {environment} from '../environments/environment';
-import {DesktopCallbackComponent} from './pages/desktop-callback/desktop-callback.component';
-import {BackgroundJobsComponent} from './pages/background-jobs/background-jobs.component';
-import {AuthSignupWizardComponent} from './pages/auth-signup-wizard/auth-signup-wizard.component';
-import {ShowFirstRunWizardGuard} from './auth-guards/show-first-run-wizard-guard';
+import { ResourceDetailComponent } from './pages/resource-detail/resource-detail.component';
+import { AuthSigninComponent } from './pages/auth-signin/auth-signin.component';
+import { AuthSignupComponent } from './pages/auth-signup/auth-signup.component';
+import { IsAuthenticatedAuthGuard } from './auth-guards/is-authenticated-auth-guard';
+import { SourceDetailComponent } from './pages/source-detail/source-detail.component';
+import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
+import { MedicalHistoryComponent } from './pages/medical-history/medical-history.component';
+import { ReportLabsComponent } from './pages/report-labs/report-labs.component';
+import { ResourceCreatorComponent } from './pages/resource-creator/resource-creator.component';
+import { ExploreComponent } from './pages/explore/explore.component';
+import { environment } from '../environments/environment';
+import { DesktopCallbackComponent } from './pages/desktop-callback/desktop-callback.component';
+import { BackgroundJobsComponent } from './pages/background-jobs/background-jobs.component';
+import { AuthSignupWizardComponent } from './pages/auth-signup-wizard/auth-signup-wizard.component';
+import { ShowFirstRunWizardGuard } from './auth-guards/show-first-run-wizard-guard';
+import { LabDetailComponent } from "./pages/lab-detail/lab-detail.component";
 
 const routes: Routes = [
 
   { path: 'auth/signup/wizard', component: AuthSignupWizardComponent },
 
-  { path: 'auth/signin', component: AuthSigninComponent, canActivate: [ ShowFirstRunWizardGuard] },
+  { path: 'auth/signin', component: AuthSigninComponent, canActivate: [ShowFirstRunWizardGuard] },
   { path: 'auth/signin/callback/:idp_type', component: AuthSigninComponent },
-  { path: 'auth/signup', component: AuthSignupComponent, canActivate: [ ShowFirstRunWizardGuard] },
+  { path: 'auth/signup', component: AuthSignupComponent, canActivate: [ShowFirstRunWizardGuard] },
   { path: 'auth/signup/callback/:idp_type', component: AuthSignupComponent },
 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [ IsAuthenticatedAuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [IsAuthenticatedAuthGuard] },
 
   //explore page will replace source/* pages
-  { path: 'explore', component: ExploreComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'explore/:source_id', component: SourceDetailComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'explore/:source_id/resource/:resource_id', component: ResourceDetailComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'explore/:source_id/resource/:resource_type/:resource_id', component: ResourceDetailComponent, canActivate: [ IsAuthenticatedAuthGuard] },
+  { path: 'explore', component: ExploreComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'explore/:source_id', component: SourceDetailComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'explore/:source_id/resource/:resource_id', component: ResourceDetailComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'explore/:source_id/resource/:resource_type/:resource_id', component: ResourceDetailComponent, canActivate: [IsAuthenticatedAuthGuard] },
 
-  { path: 'sources', component: MedicalSourcesComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'sources/callback/:state', component: MedicalSourcesComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'resource/create', component: ResourceCreatorComponent, canActivate: [ IsAuthenticatedAuthGuard] },
+  { path: 'sources', component: MedicalSourcesComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'sources/callback/:state', component: MedicalSourcesComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'resource/create', component: ResourceCreatorComponent, canActivate: [IsAuthenticatedAuthGuard] },
 
-  { path: 'desktop/callback/:state', component: DesktopCallbackComponent, canActivate: [ IsAuthenticatedAuthGuard] },
+  { path: 'desktop/callback/:state', component: DesktopCallbackComponent, canActivate: [IsAuthenticatedAuthGuard] },
 
-  { path: 'background-jobs', component: BackgroundJobsComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'patient-profile', component: PatientProfileComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'medical-history', component: MedicalHistoryComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'labs', component: ReportLabsComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'labs/report/:source_id/:resource_type/:resource_id', component: ReportLabsComponent, canActivate: [ IsAuthenticatedAuthGuard] },
+  { path: 'background-jobs', component: BackgroundJobsComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'patient-profile', component: PatientProfileComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'medical-history', component: MedicalHistoryComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'labs', component: ReportLabsComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'labs/:code', component: LabDetailComponent, canActivate: [IsAuthenticatedAuthGuard] },
+  { path: 'labs/report/:source_id/:resource_type/:resource_id', component: ReportLabsComponent, canActivate: [IsAuthenticatedAuthGuard] },
 
   // { path: 'general-pages', loadChildren: () => import('./general-pages/general-pages.module').then(m => m.GeneralPagesModule) },
   // { path: 'ui-elements', loadChildren: () => import('./ui-elements/ui-elements.module').then(m => m.UiElementsModule) },
@@ -60,10 +62,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes,  {useHash: environment.environment_desktop}),
+    RouterModule.forRoot(routes, { useHash: environment.environment_desktop }),
     CommonModule,
     BrowserModule,
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

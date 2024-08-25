@@ -3,16 +3,15 @@ package middleware
 import (
 	"bytes"
 	"fmt"
-	"github.com/fastenhealth/fasten-onprem/backend/pkg"
-	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"io"
-	"io/ioutil"
 	"math"
 	"net/http"
 	"os"
-	"strings"
 	"time"
+
+	"github.com/fastenhealth/fasten-onprem/backend/pkg"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 // Middleware based on https://github.com/toorop/gin-logrus/blob/master/logger.go
@@ -39,14 +38,14 @@ func LoggerMiddleware(logger *logrus.Entry) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		//clone the request body reader.
-		var reqBody string
-		if c.Request.Body != nil {
-			buf, _ := ioutil.ReadAll(c.Request.Body)
-			reqBodyReader1 := ioutil.NopCloser(bytes.NewBuffer(buf))
-			reqBodyReader2 := ioutil.NopCloser(bytes.NewBuffer(buf)) //We have to create a new Buffer, because reqBodyReader1 will be read.
-			c.Request.Body = reqBodyReader2
-			reqBody = readBody(reqBodyReader1)
-		}
+		// var reqBody string
+		// if c.Request.Body != nil {
+		// 	buf, _ := ioutil.ReadAll(c.Request.Body)
+		// 	reqBodyReader1 := ioutil.NopCloser(bytes.NewBuffer(buf))
+		// 	reqBodyReader2 := ioutil.NopCloser(bytes.NewBuffer(buf)) //We have to create a new Buffer, because reqBodyReader1 will be read.
+		// 	c.Request.Body = reqBodyReader2
+		// 	reqBody = readBody(reqBodyReader1)
+		// }
 
 		// other handler can change c.Path so:
 		path := c.Request.URL.Path
@@ -90,13 +89,13 @@ func LoggerMiddleware(logger *logrus.Entry) gin.HandlerFunc {
 				entry.Info(msg)
 			}
 		}
-		if strings.Contains(path, "/api/") {
-			//only debug log request/response from api endpoint.
-			if len(reqBody) > 0 {
-				entry.WithField("bodyType", "request").Debugln(reqBody) // Print request body
-			}
-			entry.WithField("bodyType", "response").Debugln(blw.body.String())
-		}
+		// if strings.Contains(path, "/api/") {
+		// 	//only debug log request/response from api endpoint.
+		// 	if len(reqBody) > 0 {
+		// 		entry.WithField("bodyType", "request").Debugln(reqBody) // Print request body
+		// 	}
+		// 	entry.WithField("bodyType", "response").Debugln(blw.body.String())
+		// }
 	}
 }
 

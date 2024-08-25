@@ -4,22 +4,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net"
+	"net/http"
+	"net/url"
+	"strings"
+	"time"
+
 	"github.com/fastenhealth/fasten-onprem/backend/pkg"
 	"github.com/fastenhealth/fasten-onprem/backend/pkg/database"
 	"github.com/fastenhealth/fasten-onprem/backend/pkg/models"
 	"github.com/fastenhealth/gofhir-models/fhir401"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"log"
-	"net"
-	"net/http"
-	"net/url"
-	"strings"
-	"time"
 )
 
 func FindCodeSystem(codeSystem string) (string, error) {
-	log.Printf("codeSystem: %s", codeSystem)
 	if strings.HasPrefix(codeSystem, "2.16.840.1.113883.6.") {
 		return codeSystem, nil
 	}

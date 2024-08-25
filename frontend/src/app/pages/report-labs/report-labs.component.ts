@@ -176,6 +176,7 @@ export class ReportLabsComponent implements OnInit {
         "category": "http://terminology.hl7.org/CodeSystem/v2-0074|LAB",
       },
       limit: 10,
+      // TODO: paginate this?
     }).subscribe(results => {
       this.diagnosticReports = results.data
     })
@@ -194,7 +195,8 @@ export class ReportLabsComponent implements OnInit {
       from: "Observation",
       where: {
         "code": codes.join(","),
-      }
+      },
+      limit: 300,
     }).pipe(
       map((response: ResponseWrapper) => {
 
