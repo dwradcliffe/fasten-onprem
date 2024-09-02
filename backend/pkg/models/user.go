@@ -11,14 +11,19 @@ import (
 
 type User struct {
 	ModelBase
-	FullName string `json:"full_name"`
-	Username string `json:"username" gorm:"unique"`
-	Password string `json:"password"`
+	FullName string       `json:"full_name"`
+	Username string       `json:"username" gorm:"unique"`
+	Password string       `json:"password"`
+	Picture  string       `json:"picture"`
+	Email    string       `json:"email"`
+	Role     pkg.UserRole `json:"role"`
+}
 
-	//additional optional metadata that Fasten stores with users
-	Picture string       `json:"picture"`
-	Email   string       `json:"email"`
-	Role    pkg.UserRole `json:"role"`
+// FrontendUser is User with the addition of Permissions arranged
+// as we want for sending to and from the frontend
+type FrontendUser struct {
+	User
+	Permissions map[string]map[string]bool `json:"permissions"`
 }
 
 func (user *User) HashPassword(password string) error {
