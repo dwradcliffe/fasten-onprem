@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { List, ValueSet } from 'fhir/r4';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -30,7 +30,11 @@ export class FastenApiService {
   private _eventBus: Observable<Event>
   private _eventBusAbortController: AbortController
 
-  constructor(@Inject(HTTP_CLIENT_TOKEN) private _httpClient: HttpClient,  private router: Router, private authService: AuthService) {
+  constructor(
+    @Inject(HTTP_CLIENT_TOKEN) private _httpClient: HttpClient,
+    private router: Router,
+    private authService: AuthService,
+  ) {
   }
 
   /*
@@ -138,8 +142,8 @@ export class FastenApiService {
   }
 
 
-  getSources(): Observable<Source[]> {
-    return this._httpClient.get<any>(`${GetEndpointAbsolutePath(globalThis.location, environment.fasten_api_endpoint_base)}/secure/source`)
+  getSources(username?: string): Observable<Source[]> {
+    return this._httpClient.get<any>(`${GetEndpointAbsolutePath(globalThis.location, environment.fasten_api_endpoint_base)}/secure/source`, {params: {as_user: username}})
       .pipe(
         map((response: ResponseWrapper) => {
           return response.data as Source[]

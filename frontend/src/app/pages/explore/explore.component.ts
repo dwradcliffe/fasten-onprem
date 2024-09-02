@@ -4,7 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Source} from '../../models/fasten/source';
 import {forkJoin, of} from 'rxjs';
 import {LighthouseService} from '../../services/lighthouse.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LighthouseBrandListDisplayItem} from '../../models/lighthouse/lighthouse-source-search';
 import {LighthouseSourceMetadata} from '../../models/lighthouse/lighthouse-source-metadata';
 import {SourceListItem} from '../medical-sources/medical-sources.component';
@@ -18,15 +18,17 @@ import {SourceListItem} from '../medical-sources/medical-sources.component';
 export class ExploreComponent implements OnInit {
   loading: boolean = false
   connectedSources: SourceListItem[] = []
+  username: string = null;
   constructor(
     private fastenApi: FastenApiService,
     private lighthouseApi: LighthouseService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.loading = true
-    this.fastenApi.getSources().subscribe(results => {
+    this.fastenApi.getSources(this.username).subscribe(results => {
 
       //handle connected sources sources
       const connectedSources = results as Source[]

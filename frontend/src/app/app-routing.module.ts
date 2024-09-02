@@ -22,6 +22,28 @@ import { ResourceDetailComponent } from './pages/resource-detail/resource-detail
 import { SourceDetailComponent } from './pages/source-detail/source-detail.component';
 import { UserCreateComponent } from './pages/user-create/user-create.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
+import { UserEditComponent } from './pages/user-edit/user-edit.component';
+
+const userSwitchableRoutes: Routes = [
+  ...[
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'explore', component: ExploreComponent },
+    { path: 'explore/:source_id', component: SourceDetailComponent },
+    { path: 'explore/:source_id/resource/:resource_id', component: ResourceDetailComponent },
+    { path: 'explore/:source_id/resource/:resource_type/:resource_id', component: ResourceDetailComponent },
+    { path: 'sources', component: MedicalSourcesComponent },
+    { path: 'sources/callback/:state', component: MedicalSourcesComponent },
+    { path: 'resource/create', component: ResourceCreatorComponent },
+    { path: 'background-jobs', component: BackgroundJobsComponent },
+    { path: 'patient-profile', component: PatientProfileComponent },
+    { path: 'medical-history', component: MedicalHistoryComponent },
+    { path: 'labs', component: ReportLabsComponent },
+    { path: 'labs/report/:source_id/:resource_type/:resource_id', component: ReportLabsComponent },
+  ].flatMap(route => [
+    { ...route, canActivate: [ IsAuthenticatedAuthGuard ] },
+    { ...route, path: `u/:username/${route.path}`, canActivate: [ IsAuthenticatedAuthGuard ] }
+  ])
+]
 
 const routes: Routes = [
 
@@ -33,34 +55,15 @@ const routes: Routes = [
   { path: 'auth/signup/callback/:idp_type', component: AuthSignupComponent },
 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-
-  //explore page will replace source/* pages
-  { path: 'explore', component: ExploreComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'explore/:source_id', component: SourceDetailComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'explore/:source_id/resource/:resource_id', component: ResourceDetailComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'explore/:source_id/resource/:resource_type/:resource_id', component: ResourceDetailComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-
-  { path: 'sources', component: MedicalSourcesComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'sources/callback/:state', component: MedicalSourcesComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'resource/create', component: ResourceCreatorComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-
-  { path: 'desktop/callback/:state', component: DesktopCallbackComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-
-  { path: 'background-jobs', component: BackgroundJobsComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'patient-profile', component: PatientProfileComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'medical-history', component: MedicalHistoryComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'labs', component: ReportLabsComponent, canActivate: [ IsAuthenticatedAuthGuard] },
-  { path: 'labs/report/:source_id/:resource_type/:resource_id', component: ReportLabsComponent, canActivate: [ IsAuthenticatedAuthGuard] },
 
   { path: 'users', component: UserListComponent, canActivate: [ IsAuthenticatedAuthGuard, IsAdminAuthGuard ] },
   { path: 'users/new', component: UserCreateComponent, canActivate: [ IsAuthenticatedAuthGuard, IsAdminAuthGuard ] },
+  { path: 'users/:user_id', component: UserEditComponent, canActivate: [ IsAuthenticatedAuthGuard, IsAdminAuthGuard ] },
 
-  // { path: 'general-pages', loadChildren: () => import('./general-pages/general-pages.module').then(m => m.GeneralPagesModule) },
-  // { path: 'ui-elements', loadChildren: () => import('./ui-elements/ui-elements.module').then(m => m.UiElementsModule) },
-  // { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
-  // { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },
-  // { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
+  { path: 'desktop/callback/:state', component: DesktopCallbackComponent, canActivate: [ IsAuthenticatedAuthGuard] },
+
+  ...userSwitchableRoutes,
+
   { path: '**', redirectTo: 'dashboard' },
 ];
 
