@@ -1,13 +1,13 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {FhirCardComponentInterface} from '../../fhir-card/fhir-card-component-interface';
-import {ImmunizationModel} from '../../../../../lib/models/resources/immunization-model';
-import {TableRowItem} from '../../common/table/table-row-item';
-import {Router, RouterModule} from '@angular/router';
-import {PractitionerModel} from '../../../../../lib/models/resources/practitioner-model';
-import {NgbCollapseModule} from "@ng-bootstrap/ng-bootstrap";
-import {CommonModule} from "@angular/common";
-import {BadgeComponent} from "../../common/badge/badge.component";
-import {TableComponent} from "../../common/table/table.component";
+import { CommonModule } from "@angular/common";
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
+import { FORMATTERS } from 'src/app/components/fhir-datatable/datatable-generic-resource/utils';
+import { PractitionerModel } from '../../../../../lib/models/resources/practitioner-model';
+import { BadgeComponent } from "../../common/badge/badge.component";
+import { TableRowItem, TableRowItemDataType } from '../../common/table/table-row-item';
+import { TableComponent } from "../../common/table/table.component";
+import { FhirCardComponentInterface } from '../../fhir-card/fhir-card-component-interface';
 
 @Component({
   standalone: true,
@@ -20,72 +20,69 @@ export class PractitionerComponent implements OnInit, FhirCardComponentInterface
   @Input() displayModel: PractitionerModel | null
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
+
 
   tableData: TableRowItem[] = []
 
-  constructor(public changeRef: ChangeDetectorRef, public router: Router) {}
+  constructor(public changeRef: ChangeDetectorRef, public router: Router) { }
 
   ngOnInit(): void {
     this.tableData = [
-    {
-      label: 'Gender',
-      data: this.displayModel?.gender,
-      enabled: !!this.displayModel?.gender,
-    },
-    // {
-    //   label: 'Birth date',
-    //   data: birthDate && <Date fhirData={birthDate} isBlack />,
-    //   status: birthDate,
-    // },
-    // {
-    //   label: 'Contact',
-    //   data: isContactData && (
-    //   <PatientContact
-    //     name={contactData.name}
-    //   relationship={contactData.relationship}
-    //   />
-    // ),
-    //   status: isContactData,
-    // },
-  ];
-    for(let idCoding of (this.displayModel?.identifier || [])){
-      this.tableData.push({
-        label: `Identifier (${idCoding.system})`,
-        data: idCoding.display || idCoding.value,
-        enabled: true,
-      })
+      {
+        label: 'Gender',
+        data: this.displayModel?.gender,
+        enabled: !!this.displayModel?.gender,
+      },
+      // {
+      //   label: 'Birth date',
+      //   data: birthDate && <Date fhirData={birthDate} isBlack />,
+      //   status: birthDate,
+      // },
+      // {
+      //   label: 'Contact',
+      //   data: isContactData && (
+      //   <PatientContact
+      //     name={contactData.name}
+      //   relationship={contactData.relationship}
+      //   />
+      // ),
+      //   status: isContactData,
+      // },
+    ];
+    for (let idCoding of (this.displayModel?.identifier || [])) {
+      if (idCoding.system == "http://hl7.org/fhir/sid/us-npi") {
+        this.tableData.push({
+          label: "NPI",
+          data: idCoding.display || idCoding.value,
+          enabled: true,
+        })
+      } else if (!this.isPopover) {
+        this.tableData.push({
+          label: `Identifier (${idCoding.system})`,
+          data: idCoding.display || idCoding.value,
+          enabled: true,
+        })
+      }
     }
-    if(this.displayModel?.address?.length > 0){
-      let address = this.displayModel?.address?.[0]
-      let addressParts = []
-      if(address.line){
-        addressParts.push(address.line.join(' '))
-      }
-      if(address.city){
-        addressParts.push(address.city)
-      }
-      if(address.state){
-        addressParts.push(address.state)
-      }
-      if(address.postalCode){
-        addressParts.push(address.postalCode)
-      }
-
+    if (this.displayModel?.address?.length > 0) {
+      let address = FORMATTERS.address(this.displayModel?.address?.[0])
       this.tableData.push({
         label: 'Address',
-        data: addressParts.join(", "),
-        enabled: !!addressParts,
+        data_type: TableRowItemDataType.StringArray,
+        data: address,
+        enabled: !!address,
       })
     }
-    for(let telecom of (this.displayModel?.telecom || [])){
+    for (let telecom of (this.displayModel?.telecom || [])) {
       this.tableData.push({
-        label: telecom.system,
+        label: telecom.system.charAt(0).toUpperCase() + telecom.system.slice(1),
         data: telecom.value,
         enabled: !!telecom.value,
       })
     }
   }
-  markForCheck(){
+  markForCheck() {
     this.changeRef.markForCheck()
   }
 }

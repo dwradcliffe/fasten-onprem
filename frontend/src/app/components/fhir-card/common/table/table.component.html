@@ -11,6 +11,7 @@
          rowItem.data_type == 'coding'? dataTypeCoding :
          rowItem.data_type == 'codingList'? dataTypeCodingList :
          rowItem.data_type == 'codableConcept'? dataTypeCodableConcept :
+         rowItem.data_type == 'stringArray'? dataTypeStringArray :
          dataTypeString"></ng-container>
 
         <ng-template #dataTypeCodableConcept>
@@ -24,6 +25,11 @@
         </ng-template>
         <ng-template #dataTypeReference>
           <a [routerLink]="['/explore', displayModel.source_id, 'resource', rowItem.data.reference]">{{rowItem.data.display}}</a>
+        </ng-template>
+        <ng-template #dataTypeStringArray>
+          <span *ngFor="let item of rowItem.data; let isLast = last">
+            {{item}}<span *ngIf="!isLast"><br></span>
+          </span>
         </ng-template>
         <ng-template #dataTypeString>{{rowItem.data}}</ng-template>
       </td>

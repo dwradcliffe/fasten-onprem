@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import {CommonModule} from '@angular/common';
-import {BadgeComponent} from '../../common/badge/badge.component';
-import {TableComponent} from '../../common/table/table.component';
-import {Router, RouterModule} from '@angular/router';
-import {TableRowItem, TableRowItemDataType} from '../../common/table/table-row-item';
-import {ObservationModel} from '../../../../../lib/models/resources/observation-model';
+import { CommonModule } from '@angular/common';
+import { BadgeComponent } from '../../common/badge/badge.component';
+import { TableComponent } from '../../common/table/table.component';
+import { Router, RouterModule } from '@angular/router';
+import { TableRowItem, TableRowItemDataType } from '../../common/table/table-row-item';
+import { ObservationModel } from '../../../../../lib/models/resources/observation-model';
 import { ObservationVisualizationComponent } from '../../common/observation-visualization/observation-visualization.component';
 
 @Component({
@@ -20,6 +20,7 @@ export class ObservationComponent implements OnInit {
   @Input() displayModel: ObservationModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
 
   tableData: TableRowItem[] = []
   displayVisualization: boolean = true
@@ -27,7 +28,7 @@ export class ObservationComponent implements OnInit {
   constructor(public changeRef: ChangeDetectorRef, public router: Router) { }
 
   ngOnInit(): void {
-    if(!this.displayModel){
+    if (!this.displayModel) {
       return
     }
 
@@ -70,7 +71,7 @@ export class ObservationComponent implements OnInit {
     )
   }
 
-  markForCheck(){
+  markForCheck() {
     this.changeRef.markForCheck()
   }
 }

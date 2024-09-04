@@ -37,6 +37,16 @@ export const FORMATTERS = {
     if(codeableConcept.text) return codeableConcept.text
     return codeableConcept.coding && codeableConcept.coding[0] ? `${codeableConcept.coding[0].code}: ${codeableConcept.coding[0].display ? codeableConcept.coding[0].display : ''}` : ''
   },
+  address_line: (address): string => {
+    if (!address) return ""
+    let addressParts = []
+    if (address.line) addressParts.push(address.line.join(' '))
+    if (address.city) addressParts.push(address.city)
+    if (address.state) addressParts.push(address.state)
+    if (address.postalCode) addressParts.push(address.postalCode)
+    if(address.country) addressParts.push(address.country)
+    return addressParts.join(", ")
+  },
   address: (address): Array<string> => {
     if(!address) return []
     var addressParts = []

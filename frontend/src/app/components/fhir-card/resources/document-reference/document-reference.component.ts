@@ -22,9 +22,10 @@ export class DocumentReferenceComponent implements OnInit, FhirCardComponentInte
   @Input() displayModel: DocumentReferenceModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
   tableData: TableRowItem[] = []
   active: number = 0
-  
+
   constructor(public changeRef: ChangeDetectorRef, public router: Router) {}
 
 

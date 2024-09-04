@@ -1,14 +1,13 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {NgbCollapseModule} from '@ng-bootstrap/ng-bootstrap';
-import {CommonModule} from '@angular/common';
-import {BadgeComponent} from '../../common/badge/badge.component';
-import {TableComponent} from '../../common/table/table.component';
-import {Router, RouterModule} from '@angular/router';
-import {FhirCardComponentInterface} from '../../fhir-card/fhir-card-component-interface';
-import {ImmunizationModel} from '../../../../../lib/models/resources/immunization-model';
-import {TableRowItem, TableRowItemDataType} from '../../common/table/table-row-item';
-import * as _ from 'lodash';
-import {LocationModel} from '../../../../../lib/models/resources/location-model';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { FORMATTERS } from 'src/app/components/fhir-datatable/datatable-generic-resource/utils';
+import { LocationModel } from '../../../../../lib/models/resources/location-model';
+import { BadgeComponent } from '../../common/badge/badge.component';
+import { TableRowItem, TableRowItemDataType } from '../../common/table/table-row-item';
+import { TableComponent } from '../../common/table/table.component';
+import { FhirCardComponentInterface } from '../../fhir-card/fhir-card-component-interface';
 
 @Component({
   standalone: true,
@@ -21,6 +20,7 @@ export class LocationComponent implements OnInit, FhirCardComponentInterface {
   @Input() displayModel: LocationModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
 
   tableData: TableRowItem[] = []
 
@@ -28,7 +28,8 @@ export class LocationComponent implements OnInit, FhirCardComponentInterface {
 
   ngOnInit(): void {
 
-    this.tableData.push(    {
+    this.tableData.push(
+      {
         label: 'Type',
         data: this.displayModel?.type?.[0],
         data_type: TableRowItemDataType.CodableConcept,
@@ -50,27 +51,32 @@ export class LocationComponent implements OnInit, FhirCardComponentInterface {
         data: this.displayModel?.description,
         enabled: !!this.displayModel?.description,
       },
-      // {
-      //   label: 'Address',
-      //   data: this.displayModel?.address,
-      //   data_type: TableRowItemDataType.Reference,
-      //   enabled: !!this.displayModel?.address,
-      // },
-      {
-        label: 'Telecom',
-        data: this.displayModel?.telecom,
-        data_type: TableRowItemDataType.Reference,
-        enabled: !!this.displayModel?.telecom,
-      },
       {
         label: 'Managing Organization',
         data: this.displayModel?.managing_organization,
         data_type: TableRowItemDataType.Reference,
         enabled: !!this.displayModel?.managing_organization,
+      }
+    )
+
+    let a = FORMATTERS.address(this.displayModel?.address)
+    this.tableData.push({
+      label: 'Address',
+      data_type: TableRowItemDataType.StringArray,
+      data: a,
+      enabled: !!a,
+    })
+
+    for (let telecom of (this.displayModel?.telecom || [])) {
+      this.tableData.push({
+        label: telecom.system.charAt(0).toUpperCase() + telecom.system.slice(1),
+        data: telecom.value,
+        enabled: !!telecom.value,
       })
+    }
 
   }
-  markForCheck(){
+  markForCheck() {
     this.changeRef.markForCheck()
   }
 

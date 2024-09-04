@@ -17,6 +17,7 @@ export class FallbackComponent implements OnInit, FhirCardComponentInterface {
   @Input() displayModel: BinaryModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
 
   constructor(public changeRef: ChangeDetectorRef, public router: Router) {}
 

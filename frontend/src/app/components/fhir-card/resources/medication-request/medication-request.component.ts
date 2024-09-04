@@ -20,6 +20,7 @@ export class MedicationRequestComponent implements OnInit, FhirCardComponentInte
   @Input() displayModel: MedicationRequestModel | null
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
 
   //these are used to populate the description of the resource. May not be available for all resources
   resourceCode?: string;

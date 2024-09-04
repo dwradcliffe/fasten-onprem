@@ -4,13 +4,14 @@ import {CodableConceptModel} from '../../../../../lib/models/datatypes/codable-c
 
 export class TableRowItem {
   label?: string
-  data?: string | ReferenceModel | CodingModel | CodingModel[] | CodableConceptModel
+  data?: string | string[] | ReferenceModel | CodingModel | CodingModel[] | CodableConceptModel
   data_type?: TableRowItemDataType
   enabled?: boolean //determine if this row should be displayed
 }
 
 export enum TableRowItemDataType {
   String = "string",
+  StringArray = "stringArray",
   Reference = "reference",
   Coding = "coding",
   CodingList = "codingList",

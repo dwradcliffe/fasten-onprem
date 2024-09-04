@@ -20,6 +20,7 @@ export class ImmunizationComponent implements OnInit, FhirCardComponentInterface
   @Input() displayModel: ImmunizationModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
 
   tableData: TableRowItem[] = []
 

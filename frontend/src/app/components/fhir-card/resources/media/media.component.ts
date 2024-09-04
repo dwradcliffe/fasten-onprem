@@ -21,6 +21,7 @@ export class MediaComponent implements OnInit, FhirCardComponentInterface{
   @Input() displayModel: MediaModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
   tableData: TableRowItem[] = []
 
   constructor(public changeRef: ChangeDetectorRef, public router: Router) {}

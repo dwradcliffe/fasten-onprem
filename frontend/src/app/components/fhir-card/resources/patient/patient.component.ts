@@ -18,6 +18,7 @@ export class PatientComponent implements OnInit, FhirCardComponentInterface {
   @Input() displayModel: PatientModel;
   @Input() showDetails: boolean = true;
   @Input() isCollapsed: boolean = false;
+  @Input() isPopover: boolean = false
 
   constructor(public changeRef: ChangeDetectorRef, public router: Router) { }
 

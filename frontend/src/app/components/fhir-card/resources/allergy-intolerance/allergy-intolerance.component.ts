@@ -19,6 +19,7 @@ export class AllergyIntoleranceComponent implements OnInit, FhirCardComponentInt
   @Input() displayModel: AllergyIntoleranceModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
 
   tableData: TableRowItem[] = []
 

@@ -5,6 +5,7 @@ export interface FhirCardComponentInterface {
   displayModel: FastenDisplayModel;
   showDetails: boolean;
   isCollapsed: boolean;
+  isPopover: boolean;
 
   //these are used to populate the description of the resource. May not be available for all resources
   resourceCode?: string;

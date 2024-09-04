@@ -1,12 +1,12 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {NgbCollapseModule} from '@ng-bootstrap/ng-bootstrap';
-import {CommonModule} from '@angular/common';
-import {BadgeComponent} from '../../common/badge/badge.component';
-import {TableComponent} from '../../common/table/table.component';
-import {Router, RouterModule} from '@angular/router';
-import {LocationModel} from '../../../../../lib/models/resources/location-model';
-import {TableRowItem, TableRowItemDataType} from '../../common/table/table-row-item';
-import {OrganizationModel} from '../../../../../lib/models/resources/organization-model';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { FORMATTERS } from 'src/app/components/fhir-datatable/datatable-generic-resource/utils';
+import { OrganizationModel } from '../../../../../lib/models/resources/organization-model';
+import { BadgeComponent } from '../../common/badge/badge.component';
+import { TableRowItem, TableRowItemDataType } from '../../common/table/table-row-item';
+import { TableComponent } from '../../common/table/table.component';
 
 @Component({
   standalone: true,
@@ -19,58 +19,58 @@ export class OrganizationComponent implements OnInit {
   @Input() displayModel: OrganizationModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
 
   tableData: TableRowItem[] = []
 
   constructor(public changeRef: ChangeDetectorRef, public router: Router) { }
 
   ngOnInit(): void {
-
-    for(let idCoding of (this.displayModel?.identifier || [])){
-      this.tableData.push({
-        label: `Identifier (${idCoding.system})`,
-        data: idCoding.display || idCoding.value,
-        enabled: true,
-      })
+    if (!this.isPopover) {
+      for (let idCoding of (this.displayModel?.identifier || [])) {
+        this.tableData.push({
+          label: `Identifier (${idCoding.system})`,
+          data: idCoding.display || idCoding.value,
+          enabled: true,
+        })
+      }
     }
 
-    for(let address of (this.displayModel?.addresses || [])){
-      let addressParts = []
-      if(address.line){
-        addressParts.push(address.line.join(' '))
-      }
-      if(address.city){
-        addressParts.push(address.city)
-      }
-      if(address.state){
-        addressParts.push(address.state)
-      }
-      if(address.postalCode){
-        addressParts.push(address.postalCode)
-      }
-
+    for (let address of (this.displayModel?.addresses || [])) {
+      let a = FORMATTERS.address(address)
       this.tableData.push({
         label: 'Address',
-        data: addressParts.join(", "),
-        enabled: !!addressParts,
+        data_type: TableRowItemDataType.StringArray,
+        data: a,
+        enabled: !!a,
       })
     }
 
-    this.tableData.push(    {
-        label: 'Contacts',
-        data: this.displayModel?.telecom,
-        data_type: TableRowItemDataType.CodingList,
-        enabled: !!this.displayModel?.telecom,
-      },
-      {
-        label: 'Type',
-        data: this.displayModel?.type_codings,
-        data_type: TableRowItemDataType.CodableConcept,
-        enabled: !!this.displayModel?.type_codings && this.displayModel.type_codings.length > 0,
+    for(let telecom of (this.displayModel?.telecom || [])){
+      this.tableData.push({
+        label: telecom.system.charAt(0).toUpperCase() + telecom.system.slice(1),
+        data: telecom.value,
+        enabled: !!telecom.value,
       })
+    }
+
+    // this.tableData.push(
+    //   {
+    //     label: 'Contacts',
+    //     data: this.displayModel?.telecom,
+    //     data_type: TableRowItemDataType.CodingList,
+    //     enabled: !!this.displayModel?.telecom,
+    //   },
+    //   {
+    //     label: 'Type',
+    //     data: this.displayModel?.type_codings,
+    //     data_type: TableRowItemDataType.CodableConcept,
+    //     enabled: !!this.displayModel?.type_codings && this.displayModel.type_codings.length > 0,
+    //   }
+    // )
 
   }
-  markForCheck(){
+  markForCheck() {
     this.changeRef.markForCheck()
   }
 

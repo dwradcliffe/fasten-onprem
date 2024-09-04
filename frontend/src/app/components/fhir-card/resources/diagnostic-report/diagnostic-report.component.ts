@@ -21,6 +21,7 @@ export class DiagnosticReportComponent implements OnInit, FhirCardComponentInter
   @Input() displayModel: DiagnosticReportModel
   @Input() showDetails: boolean = true
   @Input() isCollapsed: boolean = false
+  @Input() isPopover: boolean = false
   active: number = 0
 
   //these are used to populate the description of the resource. May not be available for all resources
