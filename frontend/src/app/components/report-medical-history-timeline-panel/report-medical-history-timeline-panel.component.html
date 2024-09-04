@@ -23,21 +23,21 @@
     </span>
     <br/>
     <span>
-      <small class="cursor-pointer text-muted pd-r-15" placement="bottom-left" popoverClass="card-fhir-resource-popover" [ngbPopover]="practitionerPopoverContent" *ngFor="let practitioner of displayModel?.related_resources['Practitioner']">
+      <small class="cursor-pointer text-muted pd-r-15" placement="bottom-left" popoverClass="card-fhir-resource-popover" [ngbPopover]="practitionerPopoverContent" *ngFor="let practitioner of practitioners">
         <i class="fas fa-user-md"></i> {{practitioner.sort_title}}
         <ng-template #practitionerPopoverContent>
           <fhir-card [displayModel]="practitioner"></fhir-card>
         </ng-template>
       </small>
 
-      <small class="cursor-pointer text-muted pd-r-15" placement="bottom-left" popoverClass="card-fhir-resource-popover" [ngbPopover]="organizationPopoverContent" *ngFor="let organization of displayModel?.related_resources['Organization']">
+      <small class="cursor-pointer text-muted pd-r-15" placement="bottom-left" popoverClass="card-fhir-resource-popover" [ngbPopover]="organizationPopoverContent" *ngFor="let organization of organizations">
         <i class="fas fa-hospital"></i> {{organization.sort_title}}
         <ng-template #organizationPopoverContent>
           <fhir-card [displayModel]="organization"></fhir-card>
         </ng-template>
       </small>
 
-      <small class="cursor-pointer text-muted pd-r-15" placement="bottom-left" popoverClass="card-fhir-resource-popover" [ngbPopover]="locationPopoverContent" *ngFor="let location of displayModel?.related_resources['Location']">
+      <small class="cursor-pointer text-muted pd-r-15" placement="bottom-left" popoverClass="card-fhir-resource-popover" [ngbPopover]="locationPopoverContent" *ngFor="let location of locations">
         <i class="fas fa-map-marker-alt"></i> {{location.sort_title}}
         <ng-template #locationPopoverContent>
           <fhir-card [displayModel]="location"></fhir-card>

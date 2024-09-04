@@ -16,6 +16,9 @@ import {ReportMedicalHistoryEditorComponent} from '../report-medical-history-edi
 export class ReportMedicalHistoryTimelinePanelComponent implements OnInit {
   @Input() resourceFhir: ResourceFhir
   displayModel: EncounterModel
+  practitioners: FastenDisplayModel[]
+  organizations: FastenDisplayModel[]
+  locations: FastenDisplayModel[]
 
   constructor(private modalService: NgbModal) { }
 
@@ -26,6 +29,9 @@ export class ReportMedicalHistoryTimelinePanelComponent implements OnInit {
 
     let parsed = RecResourceRelatedDisplayModel(this.resourceFhir)
     this.displayModel = parsed.displayModel as EncounterModel
+    this.practitioners = Array.from(new Map(this.displayModel?.related_resources['Practitioner']?.map(a => [a.source_resource_id, a])).values());
+    this.organizations = Array.from(new Map(this.displayModel?.related_resources['Organization']?.map(a => [a.source_resource_id, a])).values());
+    this.locations = Array.from(new Map(this.displayModel?.related_resources['Location']?.map(a => [a.source_resource_id, a])).values());
   }
 
   diagnosticReportLink(diagnosticReportRaw: FastenDisplayModel): string {
