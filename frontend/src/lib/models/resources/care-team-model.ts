@@ -23,6 +23,8 @@ export class CareTeamModel extends FastenDisplayModel {
   encounter: ReferenceModel | undefined
   managing_organization: ReferenceModel | undefined
 
+  resource_type_description: string = "The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care."
+
   constructor(fhirResource: any, fhirVersion?: fhirVersions, fastenOptions?: FastenOptions) {
     super(fastenOptions)
     this.source_resource_type = ResourceType.CareTeam

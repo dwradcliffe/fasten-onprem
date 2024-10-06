@@ -20,6 +20,8 @@ export class AllergyIntoleranceModel extends FastenDisplayModel {
   category: string[] | undefined
   patient: ReferenceModel | undefined
 
+  resource_type_description: string = "Risk of harmful or undesirable physiological response which is specific to an individual and associated with exposure to a substance."
+
   constructor(fhirResource: any, fhirVersion?: fhirVersions, fastenOptions?: FastenOptions) {
     super(fastenOptions)
     this.source_resource_type = ResourceType.AllergyIntolerance

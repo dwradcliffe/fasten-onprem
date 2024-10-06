@@ -1,9 +1,8 @@
-import {ReferenceModel} from '../datatypes/reference-model';
-import {fhirVersions, ResourceType} from '../constants';
-import {FastenOptions} from '../fasten/fasten-options';
-import {FastenDisplayModel} from '../fasten/fasten-display-model';
+import { fhirVersions, ResourceType } from '../constants';
+import { FastenDisplayModel } from '../fasten/fasten-display-model';
+import { FastenOptions } from '../fasten/fasten-options';
 
-export class BinaryModel extends FastenDisplayModel{
+export class BinaryModel extends FastenDisplayModel {
 
   content_type: string | undefined
   content: string | undefined  //decoded data

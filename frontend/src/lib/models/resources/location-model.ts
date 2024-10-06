@@ -1,11 +1,11 @@
 import * as _ from "lodash";
-import {AddressModel} from '../datatypes/address-model';
-import {TelecomModel} from '../datatypes/telecom-model';
-import {CodableConceptModel} from '../datatypes/codable-concept-model';
-import {ReferenceModel} from '../datatypes/reference-model';
-import {fhirVersions, ResourceType} from '../constants';
-import {FastenDisplayModel} from '../fasten/fasten-display-model';
-import {FastenOptions} from '../fasten/fasten-options';
+import { AddressModel } from '../datatypes/address-model';
+import { TelecomModel } from '../datatypes/telecom-model';
+import { CodableConceptModel } from '../datatypes/codable-concept-model';
+import { ReferenceModel } from '../datatypes/reference-model';
+import { fhirVersions, ResourceType } from '../constants';
+import { FastenDisplayModel } from '../fasten/fasten-display-model';
+import { FastenOptions } from '../fasten/fasten-options';
 
 export class LocationModel extends FastenDisplayModel {
 
@@ -18,6 +18,8 @@ export class LocationModel extends FastenDisplayModel {
   physical_type: CodableConceptModel
   mode: string
   managing_organization: ReferenceModel
+
+  resource_type_description: string = "Details and position information for a physical place where services are provided and resources and participants may be stored, found, contained, or accommodated."
 
   constructor(fhirResource: any, fhirVersion?: fhirVersions, fastenOptions?: FastenOptions) {
     super(fastenOptions)

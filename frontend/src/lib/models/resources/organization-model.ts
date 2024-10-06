@@ -16,6 +16,8 @@ export class OrganizationModel extends FastenDisplayModel {
   type: CodableConceptModel[]|undefined
   type_codings: CodingModel[]|undefined
 
+  resource_type_description: string = "A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action. Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, payer/insurer, etc."
+
   constructor(fhirResource: any, fhirVersion?: fhirVersions, fastenOptions?: FastenOptions) {
     super(fastenOptions)
     this.source_resource_type = ResourceType.Organization
