@@ -1,1 +1,18 @@
-<ng-template fhirCardOutlet></ng-template>
+<div class="card card-fhir-resource" >
+  <div class="card-header">
+    <div>
+      <h6 class="card-title">
+        <span class="text-muted" title="{{displayModel?.resource_type_description}}">{{displayModel?.resource_type_friendly}} / </span>
+        {{displayModel?.display_name}}
+      </h6>
+      <ng-template headerTextOutlet></ng-template>
+    </div>
+    <fhir-ui-badge *ngIf="displayModel?.status" class="float-right" [status]="displayModel?.status">{{displayModel?.status}}</fhir-ui-badge>
+  </div>
+  <div class="card-body">
+    <ng-template fhirCardOutlet></ng-template>
+  </div>
+  <div *ngIf="showDetails" class="card-footer">
+    <a class="float-right" [routerLink]="['/explore', displayModel?.source_id, 'resource', displayModel?.source_resource_id]">details</a>
+  </div>
+</div>

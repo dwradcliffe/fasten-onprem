@@ -55,6 +55,7 @@ export class PractitionerComponent implements OnInit, FhirCardComponentInterface
         this.tableData.push({
           label: "NPI",
           data: idCoding.display || idCoding.value,
+          link: `https://npiregistry.cms.hhs.gov/provider-view/${idCoding.display || idCoding.value}`,
           enabled: true,
         })
       } else if (!this.isPopover) {
@@ -75,9 +76,11 @@ export class PractitionerComponent implements OnInit, FhirCardComponentInterface
       })
     }
     for (let telecom of (this.displayModel?.telecom || [])) {
+      let l = telecom.system.charAt(0).toUpperCase() + telecom.system.slice(1)
       this.tableData.push({
-        label: telecom.system.charAt(0).toUpperCase() + telecom.system.slice(1),
+        label: l,
         data: telecom.value,
+        link: l == "Email" ? `mailto:${telecom.value}` : null,
         enabled: !!telecom.value,
       })
     }

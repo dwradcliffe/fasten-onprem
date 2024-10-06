@@ -32,6 +32,7 @@ import { RtfComponent } from './datatypes/rtf/rtf.component';
 import { ObservationBarChartComponent } from './common/observation-bar-chart/observation-bar-chart.component';
 import { ObservationTableComponent } from './common/observation-table/observation-table.component';
 import { ObservationVisualizationComponent } from './common/observation-visualization/observation-visualization.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -39,6 +40,7 @@ import { ObservationVisualizationComponent } from './common/observation-visualiz
   imports: [
     //common
     CommonModule,
+    RouterModule,
     BadgeComponent,
     ObservationBarChartComponent,
     ObservationTableComponent,

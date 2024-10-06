@@ -7,12 +7,22 @@
       </td>
       <td>
 
-        <ng-container [ngTemplateOutlet]="rowItem.data_type == 'reference' ? dataTypeReference :
+        <a *ngIf="rowItem.link" href="{{rowItem.link}}">
+          <ng-container [ngTemplateOutlet]="rowItem.data_type == 'reference' ? dataTypeReference :
          rowItem.data_type == 'coding'? dataTypeCoding :
          rowItem.data_type == 'codingList'? dataTypeCodingList :
          rowItem.data_type == 'codableConcept'? dataTypeCodableConcept :
          rowItem.data_type == 'stringArray'? dataTypeStringArray :
          dataTypeString"></ng-container>
+        </a>
+
+        <ng-container *ngIf="!rowItem.link" [ngTemplateOutlet]="rowItem.data_type == 'reference' ? dataTypeReference :
+         rowItem.data_type == 'coding'? dataTypeCoding :
+         rowItem.data_type == 'codingList'? dataTypeCodingList :
+         rowItem.data_type == 'codableConcept'? dataTypeCodableConcept :
+         rowItem.data_type == 'stringArray'? dataTypeStringArray :
+         dataTypeString"></ng-container>
+
 
         <ng-template #dataTypeCodableConcept>
           <fhir-codable-concept [codableConcept]="rowItem.data"></fhir-codable-concept>
@@ -32,6 +42,7 @@
           </span>
         </ng-template>
         <ng-template #dataTypeString>{{rowItem.data}}</ng-template>
+
       </td>
     </tr>
     </tbody>

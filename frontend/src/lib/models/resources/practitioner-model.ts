@@ -24,12 +24,17 @@ export class PractitionerModel extends FastenDisplayModel {
   birthdate: string|undefined
   qualification: CodingModel[]|undefined
 
+  resource_type_description: string = "A person who is directly or indirectly involved in the provisioning of healthcare."
+
   constructor(fhirResource: any, fhirVersion?: fhirVersions, fastenOptions?: FastenOptions) {
     super(fastenOptions)
     this.source_resource_type = ResourceType.Practitioner
     this.resourceDTO(fhirResource, fhirVersion || fhirVersions.R4);
   }
 
+  public get display_name() : string {
+    return this.sort_title || this.name?.[0]?.displayName
+  }
 
   commonDTO(fhirResource:any){
     const id = _.get(fhirResource, 'id', '');

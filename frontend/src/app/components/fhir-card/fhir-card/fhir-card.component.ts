@@ -30,6 +30,7 @@ import {OrganizationComponent} from '../resources/organization/organization.comp
 import {ObservationComponent} from '../resources/observation/observation.component';
 import {EncounterComponent} from '../resources/encounter/encounter.component';
 import {PatientComponent} from '../resources/patient/patient.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -47,8 +48,9 @@ export class FhirCardComponent implements OnInit, OnChanges {
 
   //location to dynamically load the displayModel
   @ViewChild(FhirCardOutletDirective, {static: true}) fhirCardOutlet!: FhirCardOutletDirective;
+  @ViewChild(FhirCardOutletDirective, {static: true}) headerTextOutlet!: FhirCardOutletDirective;
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
     this.loadComponent()

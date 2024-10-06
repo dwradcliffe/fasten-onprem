@@ -24,6 +24,9 @@ export class OrganizationModel extends FastenDisplayModel {
     this.resourceDTO(fhirResource, fhirVersion || fhirVersions.R4);
   }
 
+  public get display_name() : string {
+    return this.name
+  }
 
   commonDTO(fhirResource:any){
     this.identifier = _.get(fhirResource, 'identifier', '');

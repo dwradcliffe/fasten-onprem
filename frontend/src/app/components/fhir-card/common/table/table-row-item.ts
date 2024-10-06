@@ -7,6 +7,7 @@ export class TableRowItem {
   data?: string | string[] | ReferenceModel | CodingModel | CodingModel[] | CodableConceptModel
   data_type?: TableRowItemDataType
   enabled?: boolean //determine if this row should be displayed
+  link?: string
 }
 
 export enum TableRowItemDataType {
